@@ -57,79 +57,6 @@ src/
 public/                      CV and static assets
 ```
 
-## Local development
-
-Requires Node 18+.
-
-```bash
-npm install
-npm run dev      # http://localhost:4321
-npm run build    # outputs to dist/
-npm run preview  # serve the built site
-```
-
-## Deploying
-
-Vercel detects Astro automatically.
-
-1. Push to GitHub
-2. Import the repo at [vercel.com/new](https://vercel.com/new)
-3. Accept the detected settings — build `npm run build`, output `dist`
-4. Deploy
-
-Then set the real URL in `astro.config.mjs` (`site:`) so metadata resolves
-correctly.
-
-## Wiring up the live demo
-
-`src/config.ts` points at the deployed service:
-
-```ts
-export const FRAUD_API = 'https://fraud-detection-api.containers.snapdeploy.app';
-```
-
-The component calls `GET /health` on load and `POST /predict` on submit, and it
-handles the free tier's 10–30 second cold start explicitly rather than looking
-broken while the container wakes.
-
-**Check before publishing:** the API must send CORS headers permitting this
-site's origin. It already serves the GitHub Pages demo, so if the allowed origin
-list is `*` this works unchanged; if it names that origin specifically, add the
-Vercel domain to the FastAPI `CORSMiddleware` config.
-
-The component reads `fraud_probability`, `probability` or `score` from the JSON
-response, whichever is present.
-
-## Adding a case study
-
-Drop a Markdown file into `src/content/projects/`:
-
-```yaml
----
-title: "Short, specific title"
-order: 4
-outcome: "One line: the result"
-role: "Your role"
-period: "2026"
-stack: ["Python", "SQL"]
-repo: "https://github.com/..."
-figure: "none"        # pr | recall | signif | none
-metrics:
-  - { value: "0.91", label: "F1", hl: true }
----
-```
-
-The body follows a fixed spine: the problem, the data, decisions and why,
-what went wrong, what I'd do differently. The "what went wrong" section is
-deliberate — it is usually the most informative part.
-
-## Accessibility
-
-Responsive to 360px, visible keyboard focus, skip link, semantic landmarks,
-labelled SVG figures, and `prefers-reduced-motion` honoured throughout.
-Scroll reveals are progressive enhancement: with JavaScript disabled the
-content renders normally rather than staying invisible.
-
 ## Author
 
 **Ahmed Huzaifa Malik** — BS Data Science, Pak-Austria Fachhochschule Institute
@@ -137,4 +64,3 @@ of Applied Sciences and Technology.
 
 [LinkedIn](https://www.linkedin.com/in/ahmed-huzaifa-malik/) ·
 [GitHub](https://github.com/real-huzaifa) ·
-ahmedhuzaifamalik@gmail.com
