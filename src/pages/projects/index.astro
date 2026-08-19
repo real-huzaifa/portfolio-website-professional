@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const projects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.data.order);
+---
+<Base title="Work — Ahmed Huzaifa Malik" description="Case studies: fraud detection, churn prediction and e-commerce analytics, with the reasoning and the mistakes written out." current="Work">
+<section>
+  <div class="wrap">
+    <p class="tick" style="margin:0 0 1.2rem">Case studies</p>
+    <h1 style="max-width:16ch">Three projects, written up properly.</h1>
+    <p class="lede">
+      Each one records what the problem was, which decisions I made and why, and
+      what I got wrong on the way. The mistakes are included on purpose — they
+      are usually the part worth reading.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <ol class="idx">
+      {projects.map(p => (
+        <li class="reveal">
+          <a href={`/projects/${p.id}/`}>
+            <h2>{p.data.title}</h2>
+            <p class="out">{p.data.outcome}</p>
+            <div class="metrics">
+              {p.data.metrics.map(m => (
+                <div class={`metric ${m.hl ? 'hl':''}`}><b>{m.value}</b><span class="tick">{m.label}</span></div>
+              ))}
+            </div>
+            <p class="tick foot">{p.data.stack.join(' · ')}<span class="go">Read →</span></p>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+</Base>
+<style>
+  .lede{font-size:1.1rem;margin-top:1.4rem;max-width:58ch;color:var(--muted)}
+  .idx{list-style:none;margin:0;padding:0}
+  .idx li{border-top:1px solid var(--line)}
+  .idx li:first-child{border-top:0}
+  .idx a{display:block;text-decoration:none;padding:clamp(1.6rem,3vw,2.4rem) 0}
+  .idx a:hover{background:var(--bg-2)}
+  .idx h2{font-size:clamp(1.35rem,2.3vw,1.9rem);max-width:24ch}
+  .out{margin:.7rem 0 1.3rem;color:var(--muted);max-width:58ch}
+  .foot{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin:1.1rem 0 0}
+  .go{color:var(--v5)}
+</style>

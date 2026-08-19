@@ -1,0 +1,89 @@
+---
+/* Signature element.
+   Every dot is a transaction. 3.5% of them ignite — the fraud rate in the
+   IEEE-CIS dataset. The hard part of the problem, stated visually before
+   a single word of copy. */
+---
+<div class="pf">
+  <canvas id="pf-canvas" aria-hidden="true"></canvas>
+  <p class="pf-legend tick">
+    <span class="sw sw-neg"></span> legitimate
+    <span class="sw sw-pos"></span> fraud &mdash; 3.50% of 590,540 transactions
+  </p>
+</div>
+
+<style>
+  .pf{position:relative}
+  #pf-canvas{width:100%;height:clamp(180px,26vw,300px);display:block}
+  .pf-legend{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:.75rem 0 0}
+  .sw{width:9px;height:9px;display:inline-block;border-radius:50%}
+  .sw-neg{background:#96A3B2;opacity:.5}
+  .sw-pos{background:var(--v5);margin-left:.9rem}
+</style>
+
+<script>
+  const cv = document.getElementById('pf-canvas');
+  if (cv) {
+    const ctx = cv.getContext('2d');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let pts = [], raf = null, t0 = 0;
+
+    const build = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      const w = cv.clientWidth, h = cv.clientHeight;
+      cv.width = w * dpr; cv.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const gap = w < 520 ? 11 : 14;
+      const cols = Math.floor(w / gap), rows = Math.floor(h / gap);
+      const offX = (w - (cols - 1) * gap) / 2, offY = (h - (rows - 1) * gap) / 2;
+      pts = [];
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const i = r * cols + c;
+          pts.push({
+            x: offX + c * gap, y: offY + r * gap,
+            sx: offX + c * gap + (Math.random() - .5) * w * .5,
+            sy: offY + r * gap + (Math.random() - .5) * h * 1.2,
+            pos: Math.random() < 0.035,          // the real fraud rate
+            d: (i % 37) / 37 * 380 + Math.random() * 240
+          });
+        }
+      }
+    };
+
+    const paint = (k) => {
+      const w = cv.clientWidth, h = cv.clientHeight;
+      ctx.clearRect(0, 0, w, h);
+      for (const p of pts) {
+        const local = Math.max(0, Math.min(1, (k * 2600 - p.d) / 900));
+        const e = 1 - Math.pow(1 - local, 3);
+        const x = p.sx + (p.x - p.sx) * e, y = p.sy + (p.y - p.sy) * e;
+        if (p.pos) {
+          const ig = Math.max(0, Math.min(1, (k * 2600 - p.d - 700) / 700));
+          ctx.fillStyle = `rgba(253,231,37,${.28 + .72 * ig})`;
+          ctx.beginPath(); ctx.arc(x, y, 1.7 + 2.1 * ig, 0, 6.284); ctx.fill();
+        } else {
+          ctx.fillStyle = `rgba(150,163,178,${.10 + .26 * e})`;
+          ctx.beginPath(); ctx.arc(x, y, 1.5, 0, 6.284); ctx.fill();
+        }
+      }
+    };
+
+    const run = (t) => {
+      if (!t0) t0 = t;
+      const k = Math.min(1, (t - t0) / 2600);
+      paint(k);
+      if (k < 1) raf = requestAnimationFrame(run);
+    };
+
+    const start = () => {
+      build();
+      if (reduce) { paint(1); return; }
+      cancelAnimationFrame(raf); t0 = 0; raf = requestAnimationFrame(run);
+    };
+
+    start();
+    let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { build(); paint(1); }, 160); });
+  }
+</script>
