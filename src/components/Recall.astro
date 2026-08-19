@@ -1,0 +1,36 @@
+---
+/* Recall, shown as what it means operationally: of every five customers
+   who are about to leave, how many land on the call list. Derived from the
+   reported churn-class recall of 0.78 — no invented counts. */
+const { rate = 0.78, of = 10 } = Astro.props;
+const caught = Math.round(rate * of);
+---
+<figure class="reveal">
+  <div class="panel">
+    <p class="tick" style="margin:0 0 1rem">Churn-class recall · {rate}</p>
+    <div class="rows">
+      {Array.from({ length: of }).map((_, i) => (
+        <i class={i < caught ? 'on' : 'off'}></i>
+      ))}
+    </div>
+    <p class="key tick">
+      <span><i class="on"></i>found — {caught} of {of}</span>
+      <span><i class="off"></i>missed</span>
+    </p>
+  </div>
+  <figcaption class="figcap">
+    Roughly four in five churners are identified on unseen data. The missed
+    fifth is the number that matters: each one is a customer who was never called.
+  </figcaption>
+</figure>
+<style>
+  .rows{display:flex;gap:.4rem;flex-wrap:wrap}
+  .rows i{width:26px;height:38px;display:block;border:1px solid var(--line)}
+  .rows i.on{background:linear-gradient(180deg,var(--v4),var(--v3));border-color:transparent}
+  .rows i.off{background:var(--bg-3)}
+  .key{display:flex;gap:1.4rem;margin:1rem 0 0;flex-wrap:wrap}
+  .key span{display:inline-flex;align-items:center;gap:.45rem}
+  .key i{width:10px;height:10px;display:block;border:1px solid var(--line)}
+  .key i.on{background:var(--v3);border-color:transparent}
+  .key i.off{background:var(--bg-3)}
+</style>

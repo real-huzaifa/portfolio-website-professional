@@ -1,0 +1,25 @@
+---
+/* The chi-square result on its own. No per-category numbers, because the
+   ones I could show would be reconstructions rather than the real output. */
+---
+<figure class="reveal">
+  <div class="panel">
+    <p class="tick" style="margin:0 0 .9rem">Return rates across product categories</p>
+    <p class="stat num">p &lt; 0.001</p>
+    <p class="sub">Chi-square test of independence</p>
+    <hr />
+    <p class="expl">
+      Uneven-looking bars are not a finding — sampling noise produces those
+      routinely. The test is what separates a real difference from a plausible
+      accident, and it is the difference between "this looks odd" and something
+      a category manager can act on.
+    </p>
+  </div>
+</figure>
+<style>
+  .stat{font-size:clamp(2rem,4.5vw,2.9rem);margin:0;line-height:1;color:var(--v5)}
+  .sub{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);margin:.5rem 0 0}
+  hr{border:0;border-top:1px solid var(--line);margin:1.1rem 0}
+  .expl{font-size:.9rem;color:var(--muted);margin:0}
+</style>

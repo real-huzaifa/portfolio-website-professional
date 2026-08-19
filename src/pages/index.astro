@@ -1,0 +1,324 @@
+---
+import Base from '../layouts/Base.astro';
+import PointField from '../components/PointField.astro';
+import LiveScore from '../components/LiveScore.astro';
+import { getCollection } from 'astro:content';
+const projects = (await getCollection('projects')).sort((a,b)=>a.data.order-b.data.order);
+
+const certs = [
+  { name: 'Data Analyst in Python', by: 'DataCamp' },
+  { name: 'Data Visualization with Power BI and Tableau', by: 'DataCamp' },
+  { name: 'SQL Fundamentals', by: 'DataCamp' },
+  { name: 'Data Literacy', by: 'DataCamp' },
+  { name: 'Introduction to Data Analytics', by: 'Meta' },
+  { name: 'Python Data Analytics', by: 'Meta' },
+];
+
+const roles = [
+  { org:'Teyzix Core', title:'Data Analytics Intern', place:'Lahore, Pakistan', when:'Jun – Jul 2026',
+    lines:[
+      'Built a customer churn prediction model and deployed it as an interactive Streamlit dashboard for live risk scoring.',
+      'Ran a complete analytics project end to end: constructed a realistic business dataset, cleaned and transformed it, carried out exploratory analysis, and presented the findings through an interactive dashboard.',
+      'Completed standalone retail sales and public transport analytics projects, producing Power BI dashboards and written reports for non-technical stakeholders.',
+    ]},
+  { org:'Qwetrum Technologies', title:'Data Analysis Intern', place:'Lahore, Pakistan', when:'Jun – Jul 2026',
+    lines:[
+      'Contributed to assigned technical projects within the June 2026 remote cohort under professional mentorship.',
+      'Applied data cleaning, exploratory analysis and visualisation techniques to real-world project datasets.',
+      'Delivered analysis projects across the programme covering SQL querying, A/B testing, exploratory data analysis and machine learning workflows.',
+    ]},
+  { org:'Digital Empowerment Network', title:'Data Science Intern', place:'Islamabad, Pakistan', when:'Jul – Sep 2025',
+    lines:[
+      'Executed comprehensive data collection, cleaning and preprocessing workflows to prepare datasets for analysis.',
+      'Conducted data visualisation tasks to identify trends and patterns within complex datasets.',
+      'Performed model training and tuning to optimise machine learning algorithms for better performance.',
+    ]},
+  { org:'DevelopersHub Corporation', title:'Data Science Intern', place:'Islamabad, Pakistan', when:'Apr – Jun 2025',
+    lines:[
+      'Managed end-to-end data pipelines including data collection, cleaning and preprocessing.',
+      'Developed visualisations to communicate data insights effectively.',
+      'Assisted in model training and tuning to refine predictive capabilities.',
+    ]},
+];
+
+const contacts = [
+  { k:'Email',    v:'ahmedhuzaifamalik@gmail.com', href:'mailto:ahmedhuzaifamalik@gmail.com' },
+  { k:'Phone',    v:'+92 317 5569176',             href:'tel:+923175569176' },
+  { k:'GitHub',   v:'github.com/real-huzaifa',     href:'https://github.com/real-huzaifa' },
+  { k:'LinkedIn', v:'linkedin.com/in/ahmed-huzaifa-malik', href:'https://www.linkedin.com/in/ahmed-huzaifa-malik/' },
+  { k:'CV',       v:'Download as PDF',             href:'/Ahmed_Huzaifa_Malik_CV.pdf' },
+  { k:'Location', v:'Mansehra, Pakistan',          href:null },
+];
+---
+<Base title="Ahmed Huzaifa Malik — Data Analyst & Data Scientist" description="Data Science undergraduate building deployed machine learning systems. Fraud detection, churn prediction and business analytics, with the reasoning written out.">
+
+<!-- ============ LANDING ============ -->
+<section id="top" class="hero">
+  <div class="wrap">
+    <p class="tick eyebrow">Data Analyst · Data Scientist · Mansehra, Pakistan</p>
+    <h1>I build models that<br />leave the notebook.</h1>
+    <p class="lede">
+      I'm a Data Science undergraduate at Pak-Austria Fachhochschule with a foundation in
+      data analysis, machine learning and statistical modelling. I work in Python, SQL and
+      Power BI, and across four internships I've taken projects from raw data through to
+      systems that actually run — including a fraud detection model serving predictions
+      from a live cloud endpoint.
+    </p>
+    <div class="cta">
+      <a class="btn" href="#projects">See the work</a>
+      <a class="btn ghost" href="/Ahmed_Huzaifa_Malik_CV.pdf">Download CV</a>
+    </div>
+  </div>
+  <div class="wrap pf-wrap"><PointField /></div>
+</section>
+
+<!-- ============ EDUCATION ============ -->
+<section id="education">
+  <div class="wrap rail">
+    <div class="rail-mark"><span class="tick">Education</span></div>
+    <div>
+      <h2>Education &amp; certifications</h2>
+      <div class="degree reveal">
+        <div class="d-head">
+          <h3>BS Data Science</h3>
+          <span class="tick">2023 – Present</span>
+        </div>
+        <p class="d-org">Pak-Austria Fachhochschule Institute of Applied Sciences and Technology</p>
+        <p class="tick">Haripur, Pakistan</p>
+        <p class="d-note">
+          Relevant coursework spans data analysis, machine learning, statistical modelling
+          and data visualisation.
+        </p>
+      </div>
+
+      <p class="tick sec-sub">Certifications</p>
+      <ul class="certs">
+        {certs.map(c => (
+          <li class="reveal"><b>{c.name}</b><span class="tick">{c.by}</span></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+  <div class="wrap rail">
+    <div class="rail-mark"><span class="tick">Experience</span></div>
+    <div>
+      <h2>Where I've worked</h2>
+      <p class="sec-lede">Four internships across data analytics and data science.</p>
+      <ol class="roles">
+        {roles.map(r => (
+          <li class="reveal">
+            <div class="r-head">
+              <h3>{r.org}</h3>
+              <span class="tick">{r.when}</span>
+            </div>
+            <p class="tick r-title">{r.title} · {r.place}</p>
+            <ul>{r.lines.map(l => <li>{l}</li>)}</ul>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="wrap rail">
+    <div class="rail-mark"><span class="tick">Projects</span></div>
+    <div>
+      <h2>Selected projects</h2>
+      <p class="sec-lede">
+        Each one is written up in full — the problem, the decisions and why I made them,
+        and what went wrong on the way.
+      </p>
+      <ol class="work">
+        {projects.map(p => (
+          <li class="reveal">
+            <div class="w-head">
+              <h3>{p.data.title}</h3>
+              <span class="tick w-year">{p.data.period}</span>
+            </div>
+            <p class="w-out">{p.data.outcome}</p>
+            <div class="metrics w-metrics">
+              {p.data.metrics.map(m => (
+                <div class={`metric ${m.hl ? 'hl' : ''}`}>
+                  <b>{m.value}</b><span class="tick">{m.label}</span>
+                </div>
+              ))}
+            </div>
+            <p class="tick w-stack">{p.data.stack.join(' · ')}</p>
+            <div class="w-links">
+              <a class="btn" href={`/projects/${p.id}/`}>Read case study</a>
+              {p.data.demo && <a class="arrow-link" href={p.data.demo} target="_blank" rel="noopener">Live demo ↗</a>}
+              {p.data.repo && <a class="arrow-link" href={p.data.repo} target="_blank" rel="noopener">Repository ↗</a>}
+              {p.data.docs && <a class="arrow-link" href={p.data.docs} target="_blank" rel="noopener">API docs ↗</a>}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="live-wrap">
+        <p class="tick sec-sub">Try it now</p>
+        <LiveScore />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap rail">
+    <div class="rail-mark"><span class="tick">About</span></div>
+    <div class="about-grid">
+      <div class="about-prose">
+        <h2>About me</h2>
+        <p>
+          I'm Ahmed Huzaifa Malik, a Data Science undergraduate at Pak-Austria Fachhochschule
+          Institute of Applied Sciences and Technology in Haripur. Most of my work sits in
+          Python, SQL and Power BI, and covers the full path from a messy dataset to something
+          a decision-maker can act on: preprocessing, exploratory analysis, modelling,
+          visualisation and reporting.
+        </p>
+        <p>
+          The thread running through everything I build is a preference for finishing things.
+          A model that scores well in a notebook has demonstrated very little. The same model
+          behind an endpoint — containerised, reproducible, returning consistent predictions
+          on inputs it has never seen — has demonstrated something real. That gap is where most
+          of the genuine difficulty lives, and it is where I have spent the most time. On the
+          fraud project it meant discovering that LightGBM needs a system library the slim
+          Python image doesn't ship, that a container bound to localhost is unreachable, and
+          that the whole stack had to fit inside 512 MB of RAM.
+        </p>
+        <p>
+          I'm also careful about metrics, because the wrong one will tell you a broken model is
+          working and do it convincingly. Accuracy on a 3.5% fraud rate rewards a model that
+          catches nothing. Precision, when the expensive error is a missed at-risk customer,
+          optimises for the wrong side of the trade. Choosing the measure that matches the
+          actual cost of being wrong is usually the highest-leverage decision in a project, and
+          it happens before any modelling starts.
+        </p>
+        <p>
+          Alongside the modelling I do a fair amount of communication work — Power BI dashboards
+          and written reports aimed at people who don't write SQL. An analysis nobody acts on
+          hasn't finished either.
+        </p>
+        <p>
+          Right now I'm deepening my work in machine learning and deployment, and I'm looking
+          for a team where I can keep shipping.
+        </p>
+      </div>
+      <aside class="about-side">
+        <div class="panel">
+          <p class="tick" style="margin:0 0 1rem">Tools I reach for</p>
+          <dl class="tools">
+            <dt class="tick">Languages</dt><dd>Python · SQL</dd>
+            <dt class="tick">Analysis</dt><dd>pandas · NumPy · SciPy</dd>
+            <dt class="tick">Modelling</dt><dd>scikit-learn · LightGBM · XGBoost</dd>
+            <dt class="tick">Shipping</dt><dd>FastAPI · Docker · Streamlit</dd>
+            <dt class="tick">Reporting</dt><dd>Power BI · Matplotlib · Excel</dd>
+            <dt class="tick">Tooling</dt><dd>Git &amp; GitHub · VS Code · Colab</dd>
+          </dl>
+          <hr />
+          <p class="tick" style="margin:0 0 .5rem">Languages</p>
+          <p style="margin:0;font-size:.95rem">Urdu — native<br />English — B2</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <div class="wrap rail">
+    <div class="rail-mark"><span class="tick">Contact</span></div>
+    <div>
+      <h2>Open to internships and junior data roles.</h2>
+      <p class="sec-lede">
+        The case studies are the fastest way to see how I think. Email is the surest way to
+        reach me.
+      </p>
+      <ul class="contacts">
+        {contacts.map(c => (
+          <li class="reveal">
+            {c.href
+              ? <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener' : undefined}>
+                  <span class="tick c-k">{c.k}</span><span class="c-v">{c.v}</span>
+                </a>
+              : <div><span class="tick c-k">{c.k}</span><span class="c-v">{c.v}</span></div>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+</Base>
+
+<style>
+  .hero{padding-top:clamp(3rem,7vw,5.5rem);padding-bottom:clamp(2rem,4vw,3rem)}
+  .eyebrow{margin:0 0 1.4rem}
+  .lede{font-size:clamp(1.02rem,1.4vw,1.18rem);max-width:60ch;margin-top:1.5rem;color:var(--muted)}
+  .cta{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:2rem}
+  .pf-wrap{margin-top:clamp(2rem,5vw,3.5rem)}
+
+  .sec-lede{margin:.9rem 0 2rem;color:var(--muted);max-width:58ch}
+  .sec-sub{margin:2.6rem 0 1rem}
+
+  /* education */
+  .degree{border-left:2px solid var(--v3);padding:.2rem 0 .2rem 1.2rem;margin-top:1.6rem}
+  .d-head{display:flex;justify-content:space-between;gap:1.2rem;align-items:baseline;flex-wrap:wrap}
+  .d-org{margin:.45rem 0 .2rem;font-size:1.02rem}
+  .d-note{margin:.9rem 0 0;color:var(--muted);font-size:.95rem}
+  .certs{list-style:none;margin:0;padding:0;display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0;
+    border:1px solid var(--line);background:var(--bg-2)}
+  .certs li{padding:.95rem 1.1rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .certs li b{display:block;font-weight:500;font-size:.95rem}
+  .certs li span{display:block;margin-top:.25rem}
+
+  /* experience */
+  .roles{list-style:none;margin:0;padding:0}
+  .roles > li{border-top:1px solid var(--line);padding:1.6rem 0}
+  .roles > li:first-child{border-top:0;padding-top:0}
+  .r-head{display:flex;justify-content:space-between;gap:1.5rem;align-items:baseline;flex-wrap:wrap}
+  .r-title{margin:.3rem 0 .9rem}
+  .roles ul{margin:0;padding-left:1.1rem;color:var(--muted)}
+  .roles ul li{margin-bottom:.45rem;max-width:64ch}
+
+  /* projects */
+  .work{list-style:none;margin:0;padding:0}
+  .work > li{border-top:1px solid var(--line);padding:2rem 0}
+  .work > li:first-child{border-top:0;padding-top:0}
+  .w-head{display:flex;justify-content:space-between;gap:1.5rem;align-items:baseline;flex-wrap:wrap}
+  .w-head h3{max-width:30ch}
+  .w-out{margin:.6rem 0 1.2rem;color:var(--muted);max-width:60ch}
+  .w-metrics{margin-bottom:1rem}
+  .w-stack{margin:0 0 1.2rem}
+  .w-links{display:flex;gap:1.2rem;align-items:center;flex-wrap:wrap}
+  .live-wrap{margin-top:1rem}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,20rem);
+    gap:clamp(1.5rem,4vw,3rem);align-items:start}
+  @media (max-width:900px){.about-grid{grid-template-columns:1fr}}
+  .about-prose p{color:var(--muted);margin-bottom:1.15em}
+  .about-prose h2{margin-bottom:1.2rem}
+  .tools{margin:0}
+  .tools dt{margin-top:.85rem}
+  .tools dt:first-child{margin-top:0}
+  .tools dd{margin:.2rem 0 0;font-size:.95rem}
+  .about-side hr{border:0;border-top:1px solid var(--line);margin:1.3rem 0}
+
+  /* contact */
+  .contacts{list-style:none;margin:1rem 0 0;padding:0;
+    border-top:1px solid var(--line);max-width:44rem}
+  .contacts li{border-bottom:1px solid var(--line)}
+  .contacts a,.contacts div{display:grid;grid-template-columns:8rem 1fr;gap:1rem;
+    padding:1rem .2rem;text-decoration:none;align-items:baseline;transition:color .18s}
+  .contacts a:hover{color:var(--v5)}
+  .c-v{font-size:1.02rem;word-break:break-word}
+  @media (max-width:520px){.contacts a,.contacts div{grid-template-columns:1fr;gap:.25rem}}
+</style>
