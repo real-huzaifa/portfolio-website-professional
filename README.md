@@ -12,7 +12,7 @@
   <img src="https://img.shields.io/badge/dependencies-none-22A884?style=flat-square" alt="No runtime dependencies">
 </p>
 
-**Live site:** _add your URL here_
+**Live site:** https://ahmed-huzaifa-malik-professional-portfolio.vercel.app/
 
 ---
 
